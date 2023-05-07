@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "save.h"
 #include "input.h"
 
 void *input() {
@@ -23,21 +22,5 @@ void *input() {
 
         strcpy(text + text_len, buffer);
         text_len += buffer_len;
-    }
-}
-
-void name() {
-    char buffer[MAX_LENGTH];
-    char *text = NULL;
-    if (text != NULL) {
-        printf("파일 이름을 입력하세요 (예: newfile.txt):\n");
-        fgets(buffer, MAX_LENGTH, stdin);
-
-        save_to_file(buffer, text);
-        free(text);
-
-        printf("파일이 저장되었습니다: %s\n", buffer);
-    } else {
-        printf("텍스트를 입력하지 않았습니다.\n");
     }
 }
