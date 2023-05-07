@@ -1,1 +1,1 @@
-A program that recommends my favorite foods based on data.
+This program is a text editor that allows users to search for the desired text.
