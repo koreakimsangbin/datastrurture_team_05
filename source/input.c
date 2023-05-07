@@ -24,3 +24,4 @@ void *input() {
         text_len += buffer_len;
     }
 }
+ 
