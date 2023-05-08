@@ -2,27 +2,27 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_LINE_LENGTH 1024
+#define MAX_LENGTH 1024
 
 void save_to_file(const char *filename, const char *text) {
     FILE *file = fopen(filename, "w");
     if (file == NULL) {
         printf("파일을 저장하는데 오류가 발생했습니다: %s\n", filename);
-        return;
+        exit(-1);
     }
 
-    fputs(text, file);
+    fprintf(file, "%s", text);
     fclose(file);
 }
 
 int main() {
-    char buffer[MAX_LINE_LENGTH];
+    char buffer[MAX_LENGTH];
     char *text = NULL;
     size_t text_len = 0;
 
     printf("텍스트를 입력하세요 (여러 줄 입력 가능, 끝내려면 스페이스바를 두 번 누르고 엔터):\n");
 
-    while (fgets(buffer, MAX_LINE_LENGTH, stdin) != NULL) {
+    while (fgets(buffer, MAX_LENGTH, stdin) != NULL) {
         if (strcmp(buffer, "  \n") == 0) {
             break;
         }
@@ -40,7 +40,7 @@ int main() {
 
     if (text != NULL) {
         printf("파일 이름을 입력하세요 (예: newfile.txt):\n");
-        scanf("%1023s", buffer);
+        fgets(buffer, MAX_LENGTH, stdin);
 
         save_to_file(buffer, text);
         free(text);
