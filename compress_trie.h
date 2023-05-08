@@ -1,17 +1,51 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#define ALPHABET 26
 
 typedef struct TrieNode {
-    struct TrieNode* Children_point[26]; 
-    int end_point; 
+    struct TrieNode* children[ALPHABET];
+    char character;
+    int end_point;
 } TrieNode;
 
-TrieNode* createNode() {
-    TrieNode* trie_node = (TrieNode*)malloc(sizeof(TrieNode));
-    for (int i = 0; i < 26; i++) {
-        trie_node->Children_point[i] = NULL;
+TrieNode* createNode(char character) {
+    TrieNode* node = (TrieNode*)malloc(sizeof(TrieNode));
+    for (int i = 0; i < ALPHABET; i++) {
+        node->children[i] = NULL;
     }
-    trie_node->end_point = 0;
-    return trie_node;
+    node->character = character;
+    node->end_point = 0;
+    return node;
 }
 
+void node_insert(TrieNode* root, char* word) {
+    TrieNode* curr = root;
+    int len = strlen(word);
+
+    for (int i = 0; i < len; i++) {
+        int index = word[i] - 'a';
+        if (curr->children[index] == NULL) {
+            curr->children[index] = createNode(word[i]);
+        }
+        curr = curr->children[index];
+    }
+
+    curr->end_point = 1;
+}
+
+void save_file(TrieNode* root, FILE* file, char* sentence, int level) {
+    if (root == NULL) {
+        return;
+    }
+
+    sentence[level] = root->character;
+    if (root->isEndOfWord) {
+        sentence[level + 1] = '\0';
+        fprintf(file, "%s\n", sentence);
+    }
+
+    for (int i = 0; i < ALPHABET_SIZE; i++) {
+        save_file(root->children[i], file, sentence, level + 1);
+    }
+}
