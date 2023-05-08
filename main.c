@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include<stdlib.h>
 #include <string.h>
-//char *sentance;
 
 int main(int argc, const char * argv[]) {
     // insert code here��
