@@ -40,12 +40,12 @@ void save_file(TrieNode* root, FILE* file, char* sentence, int level) {
     }
 
     sentence[level] = root->character;
-    if (root->isEndOfWord) {
+    if (root->end_point) {
         sentence[level + 1] = '\0';
         fprintf(file, "%s\n", sentence);
     }
 
-    for (int i = 0; i < ALPHABET_SIZE; i++) {
+    for (int i = 0; i < ALPHABET; i++) {
         save_file(root->children[i], file, sentence, level + 1);
     }
 }

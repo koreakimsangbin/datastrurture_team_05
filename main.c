@@ -15,7 +15,7 @@ int main(int argc, const char * argv[]) {
             scanf("%s", title);
             break;
         }
-        insert(root, node_word);
+        node_insert(root, node_word);
     }
 
     FILE* file = fopen(strcat(title, ".txt"), "w");
