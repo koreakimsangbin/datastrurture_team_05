@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_ALP 30
+#define MAX_ALP 26
 
 struct TrieNode {
     int word_end;
@@ -60,19 +60,4 @@ int search(struct CompressedTrie *trie, char *key) {
     }
     
     return (node != NULL && node->word_end);
-}
-
-int main(void) {
-    struct CompressedTrie *trie = create_compressed_trie();
-
-    char keys[][8] = {"apple", "banana", "grape", "orange", "hypeboy", "newjeans"};
-    int n = sizeof(keys) / sizeof(keys[0]);
-
-    for (int i = 0; i < n; i++)
-        insert(trie, keys[i]);
-
-    printf("%s", search(trie, "hypeboy") ? "Yes" : "No");
-    printf("\n");
-    printf("%s", search(trie, "pepsi") ? "Yes" : "No");
-    return 0;
 }
