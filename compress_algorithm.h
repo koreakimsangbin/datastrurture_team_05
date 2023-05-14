@@ -24,4 +24,3 @@ TrieNode* createCompressedTrie(TrieNode* root) {
     return compressedRoot;
 }
 
-
