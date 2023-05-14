@@ -7,6 +7,7 @@
 struct TrieNode {
     int word_end;
     struct TrieNode *child[MAX_ALP];
+    int count;
 };
 
 struct CompressedTrie {
@@ -45,19 +46,5 @@ void insert(struct CompressedTrie *trie, char *key) {
         node = node->child[index];
     }
     node->word_end = 1;
-}
-
-int search(struct CompressedTrie *trie, char *key) {
-    int length = strlen(key);
-    int index;
-    struct TrieNode *node = trie->root;
-
-    for (int level = 0; level < length; level++) {
-        index = key[level] - 'a';
-        if (!node->child[index])
-            return 0;
-        node = node->child[index];
-    }
-    
-    return (node != NULL && node->word_end);
+    node->count++;
 }
