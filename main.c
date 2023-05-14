@@ -13,11 +13,7 @@ int main(int argc, const char * argv[]) {
     char text[100];       
     char title[100];
 
-    //fgets(text, sizeof(text), stdin);
-
-    // 트라이에 텍스트 삽입
-
-    // 압축 트라이 생성 및 경로 압축 적용
+    
     TrieNode* compressedTrie = createCompressedTrie(root);
 
     FILE *file = fopen("original.txt", "w");
@@ -37,14 +33,14 @@ int main(int argc, const char * argv[]) {
         insertWord(root, text);
     }
 
-    // 압축 트라이에 압축된 데이터 저장
+   
     char compressedText[100];
     compressText(compressedTrie, text, compressedText);
 
-    // 원본 텍스트 파일에 저장
+    
     saveOriginalTextToFile("original.txt", text);
 
-    // 저장된 원본 텍스트 파일 읽기
+    
     char* originalText = readOriginalTextFromFile("original.txt");
     if (originalText != NULL) {
         printf("Original Text: %s\n", originalText);

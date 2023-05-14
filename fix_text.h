@@ -8,7 +8,7 @@ void compressText(TrieNode* trie, char* originalText, char* compressedText) {
 
     TrieNode* currentNode = trie;
     for (int i = 0; originalText[i] != '\0'; i++) {
-        int index = originalText[i] - 'a';  // 알파벳을 인덱스로 변환
+        int index = originalText[i] - 'a';  
 
         if (currentNode->children[index]) {
             compressedText[compressedIndex] = originalText[i];
@@ -34,7 +34,6 @@ void saveOriginalTextToFile(const char* filename, char* text) {
 
 
 
-// 파일에서 원본 텍스트 읽기
 char* readOriginalTextFromFile(const char* filename) {
     FILE* file = fopen(filename, "r");
     if (file == NULL) {

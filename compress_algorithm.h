@@ -6,7 +6,7 @@
 TrieNode* createCompressedTrie(TrieNode* root) {
     TrieNode* compressedRoot = createNode();
 
-    // 압축 트라이 생성
+    
     for (int i = 0; i < 26; i++) {
         if (root->children[i] != NULL) {
             TrieNode* node = createNode();

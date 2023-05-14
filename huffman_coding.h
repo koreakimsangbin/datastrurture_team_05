@@ -8,7 +8,7 @@ typedef struct PriorityQueueNode {
     struct PriorityQueueNode* next;
 } PriorityQueueNode;
 
-// 우선순위 큐에 새 노드 삽입
+
 void enqueue(PriorityQueueNode** queue, char data, int frequency) {
     PriorityQueueNode* newNode = (PriorityQueueNode*)malloc(sizeof(PriorityQueueNode));
     newNode->data = data;
@@ -31,7 +31,7 @@ void enqueue(PriorityQueueNode** queue, char data, int frequency) {
     }
 }
 
-// 우선순위 큐에서 노드 제거
+
 char dequeue(PriorityQueueNode** queue) {
     if (*queue == NULL) {
         return '\0';
