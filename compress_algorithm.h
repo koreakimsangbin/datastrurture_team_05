@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "trie.h"
+
+TrieNode* createCompressedTrie(TrieNode* root) {
+    TrieNode* compressedRoot = createNode();
+
+    // 압축 트라이 생성
+    for (int i = 0; i < 26; i++) {
+        if (root->children[i] != NULL) {
+            TrieNode* node = createNode();
+            node->isEndOfWord = root->children[i]->isEndOfWord;
+            compressedRoot->children[i] = node;
+        }
+    }
+
+     for (int i = 0; i < 26; i++) {
+        if (root->children[i] != NULL) {
+            compressedRoot->children[i] = createCompressedTrie(root->children[i]);
+        }
+    }
+
+    return compressedRoot;
+}
+
+

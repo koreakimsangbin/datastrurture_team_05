@@ -1,34 +1,57 @@
 #include <stdio.h>
 #include<stdlib.h>
 #include <string.h>
-#include "compress_trie.h"
+#include "trie.h"
+#include "compress_algorithm.h"
+#include "fix_text.h"
+#include "huffman_coding.h"
 
 int main(int argc, const char * argv[]) {
     system("clear");
-    TrieNode* root = createNode('\0');
-    char node_word[100];
+    TrieNode* root = createNode();
+
+    char text[100];       
     char title[100];
 
-    while (scanf("%s", node_word) == 1) {
-        if (strcmp(node_word, "q") == 0) {
-            printf("파일 명을 입력하시오: ");   
-            scanf("%s", title);
-            break;
-        }
-        node_insert(root, node_word);
-    }
+    //fgets(text, sizeof(text), stdin);
 
-    FILE* file = fopen(strcat(title, ".txt"), "w");
+    // 트라이에 텍스트 삽입
+
+    // 압축 트라이 생성 및 경로 압축 적용
+    TrieNode* compressedTrie = createCompressedTrie(root);
+
+    FILE *file = fopen("original.txt", "w");
     if (file == NULL) {
-        printf("Failed to open the file.\n");
+        printf("파일을 열 수 없습니다.\n");
         return 1;
     }
 
-    char sentence[100];
-    save_file(root, file, sentence, 0);
-    fclose(file);
+     while (1) {
+        fgets(text, sizeof(text), stdin);
+        text[strcspn(text, "\n")] = '\0';  // 개행 문자 제거
 
-    printf("Word list saved to 'word_list.txt'.\n");
+        if (strcmp(text, "q") == 0) {
+            break;
+        }
+        fprintf(file, "%s\n", text);
+        insertWord(root, text);
+    }
+
+    // 압축 트라이에 압축된 데이터 저장
+    char compressedText[100];
+    compressText(compressedTrie, text, compressedText);
+
+    // 원본 텍스트 파일에 저장
+    saveOriginalTextToFile("original.txt", text);
+
+    // 저장된 원본 텍스트 파일 읽기
+    char* originalText = readOriginalTextFromFile("original.txt");
+    if (originalText != NULL) {
+        printf("Original Text: %s\n", originalText);
+        free(originalText);
+    }
+
+   
 
     system("clear");
     return 0;
