@@ -44,3 +44,5 @@ char dequeue(PriorityQueueNode** queue) {
 
     return data;
 }
+
+//트라이랑 허프만이랑 결이 달라서 같이 사용하기는 힘들 것 같다. 어처피 압축 트라이를 사용하니 의미가 없다.
