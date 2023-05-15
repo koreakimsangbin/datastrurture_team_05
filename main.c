@@ -10,44 +10,25 @@ int main(int argc, const char * argv[]) {
     system("clear");
     TrieNode* root = createNode();
 
-    char text[100];       
+    char text[100000];       
     char title[100];
 
     
     TrieNode* compressedTrie = createCompressedTrie(root);
-
-    FILE *file = fopen("original.txt", "w");
-    if (file == NULL) {
-        printf("파일을 열 수 없습니다.\n");
-        return 1;
-    }
-
-     while (1) {
-        fgets(text, sizeof(text), stdin);
-        text[strcspn(text, "\n")] = '\0';  // 개행 문자 제거
-
-        if (strcmp(text, "q") == 0) {
-            break;
-        }
-        fprintf(file, "%s\n", text);
-        insertWord(root, text);
-    }
-
+    printf("파일명을 작성하시오: ");
+    fgets(title, sizeof(title), stdin);
+    system("clear");
+    
+    saveOriginalTextToFile(strcat(title, ".txt"), text, root);
    
     char compressedText[100];
     compressText(compressedTrie, text, compressedText);
 
-    
-    saveOriginalTextToFile("original.txt", text);
-
-    
-    char* originalText = readOriginalTextFromFile("original.txt");
+    char* originalText = readOriginalTextFromFile(strcat(title, ".txt"));
     if (originalText != NULL) {
         printf("Original Text: %s\n", originalText);
         free(originalText);
     }
-
-   
 
     system("clear");
     return 0;
