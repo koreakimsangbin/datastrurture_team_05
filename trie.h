@@ -6,7 +6,8 @@
 
 typedef struct TrieNode {
     struct TrieNode* children[26];  
-    int isEndOfWord;  
+    int isEndOfWord;
+    int count;
 } TrieNode;
 
 TrieNode* createNode() {
@@ -35,6 +36,7 @@ void insertWord(TrieNode* root, char* word) {
     }
 
     node->isEndOfWord = 1;
+    node->count++;
 }
 
 #endif
