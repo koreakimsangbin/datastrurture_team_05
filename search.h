@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "search.h"
 
 int search(TrieNode *root, const char *word) {
     int length = strlen(word);
