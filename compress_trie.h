@@ -1,50 +1,28 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
+#include "trie.h"
 
-#define MAX_ALP 26
+char* compressT(struct TrieNode* root, char* string) {
+    struct TrieNode* R = root;
+    int count = 0;
+    int length = sizeof(string);
+    char* compressed_string = (char*)malloc(length * 2 * sizeof(char));
+    int index = 0;
 
-struct TrieNode {
-    int word_end;
-    struct TrieNode *child[MAX_ALP];
-    int count;
-};
 
-struct CompressedTrie {
-    struct TrieNode *root;
-};
-
-struct TrieNode *create_trie_node(void) {
-    struct TrieNode *node = NULL;
-    node = (struct TrieNode *)malloc(sizeof(struct TrieNode));
-    if (node) {
-        node->word_end = 0;
-        for (int i = 0; i < MAX_ALP; i++)
-            node->child[i] = NULL;
-    }
-    return node;
-}
-
-struct CompressedTrie *create_compressed_trie(void) {
-    struct CompressedTrie *trie = NULL;
-    trie = (struct CompressedTrie *)malloc(sizeof(struct CompressedTrie));
-    if (trie)
-        trie->root = create_trie_node();
-    return trie;
-}
-
-void insert(struct CompressedTrie *trie, char *key) {
-    int length = strlen(key);
-    int index;
-    struct TrieNode *node = trie->root;
-
-    for (int level = 0; level < length; level++) {
-        index = key[level] - 'a';
-        if (!node->child[index]) {
-            node->child[index] = create_trie_node();
+    for (int i = 0; i < length; i++) {
+        for (int j = 'A'; j <= 'Z'; j++) {
+            if (string[i] == string[i + 1])
+                count++;
         }
-        node = node->child[index];
+        if (count == 0)
+            compressed_string[index++] = string[i];
+        //return string;
+        else
+            compressed_string[index++] = strcat(string[i], (char)count);
+
+        compressed_string[index] = '\0';
+        return compressed_string;
     }
-    node->word_end = 1;
-    node->count++;
 }
