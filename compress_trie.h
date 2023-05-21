@@ -3,26 +3,28 @@
 #include <stdlib.h>
 #include "trie.h"
 
-char* compressT(struct TrieNode* root, char* string) {
-    struct TrieNode* R = root;
-    int count = 0;
-    int length = sizeof(string);
-    char* compressed_string = (char*)malloc(length * 2 * sizeof(char));
+char* compressT(TrieNode* root, char* string) {
+    TrieNode* R = root;
+    int length = strlen(string);
+    char* compressed_string = (char*)malloc(length * 2 * sizeof(char) + 1);
     int index = 0;
 
-
     for (int i = 0; i < length; i++) {
-        for (int j = 'A'; j <= 'Z'; j++) {
-            if (string[i] == string[i + 1])
-                count++;
+        int count = 1; 
+        compressed_string[index++] = string[i];
+        if (string[i] == string[i + 1]){
+        while (i + 1 < length && string[i] == string[i + 1]) {
+            i++;
+            count++;
         }
-        if (count == 0)
-            compressed_string[index++] = string[i];
-        //return string;
-        else
-            compressed_string[index++] = strcat(string[i], (char)count);
 
-        compressed_string[index] = '\0';
-        return compressed_string;
+        char count_str[10]; // 숫자 더하기
+        sprintf(count_str, "%d", count); // 숫자 더하기
+        for (int j = 0; j < strlen(count_str); j++) { // 숫자 더하기
+            compressed_string[index++] = count_str[j]; // 숫자 더하기
+        }
+        }
     }
+    compressed_string[index] = '\0';
+    return compressed_string;
 }
