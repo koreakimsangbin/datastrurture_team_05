@@ -1,7 +1,8 @@
 #include <stdio.h>
-#include<stdlib.h>
+#include <stdlib.h>
 #include <string.h>
 #include "compress_trie.h"
+#include "autocomplete.h"
 
 int main(int argc, const char * argv[]) {
     system("clear");
@@ -16,6 +17,7 @@ int main(int argc, const char * argv[]) {
             break;
         }
         node_insert(root, node_word);
+        autocomplete(root, node_word);
     }
 
     FILE* file = fopen(strcat(title, ".txt"), "w");
