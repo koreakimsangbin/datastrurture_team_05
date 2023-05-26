@@ -7,7 +7,7 @@ void compressText(TrieNode* trie, char* originalText, char* compressedText) {
     int compressedIndex = 0;
 
     TrieNode* currentNode = trie;
-    for (int i = 0; originalText[i] != '\0'; i++) {
+    for (int i = 0; originalText[i] != '\0' && originalText[i] != '\t'; i++) {
         int index = originalText[i] - 'a';  
 
         if (currentNode->children[index]) {

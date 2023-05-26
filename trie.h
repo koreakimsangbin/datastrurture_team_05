@@ -6,6 +6,7 @@
 
 typedef struct TrieNode {
     struct TrieNode* children[26];  
+    char* word;
     int isEndOfWord;  
 } TrieNode;
 
@@ -16,25 +17,27 @@ TrieNode* createNode() {
     for (int i = 0; i < 26; i++) {
         node->children[i] = NULL;
     }
-
+    node->word = NULL;
     return node;
 }
 
+
+
 void insertWord(TrieNode* root, char* word) {
-    TrieNode* node = root;
+    int num =0;
+    int i = 0;
+    char* as = strtok(word, " ");
+    while (as != NULL) {
+        TrieNode* wordNode = createNode();
 
-    int length = strlen(word);
-    for (int i = 0; i < length; i++) {
-        int index = word[i] - 'a';  
+        wordNode->word = (char*)malloc(strlen(as) + 1);
+        strcpy(wordNode->word, as);
+        root->children[num] = wordNode;
+        num++;
 
-        if (!node->children[index]) {
-            node->children[index] = createNode();
-        }
-
-        node = node->children[index];
+        as = strtok(NULL, " ");
     }
-
-    node->isEndOfWord = 1;
+    root->isEndOfWord = 1;    
 }
 
 #endif
