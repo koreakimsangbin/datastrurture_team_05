@@ -7,7 +7,7 @@ void compressText(TrieNode* trie, char* originalText, char* compressedText) {
     int compressedIndex = 0;
 
     TrieNode* currentNode = trie;
-    for (int i = 0; originalText[i] != '\0' && originalText[i] != '\t'; i++) {
+    for (int i = 0; originalText[i] != '\0'; i++) {
         int index = originalText[i] - 'a';  
 
         if (currentNode->children[index]) {
@@ -22,31 +22,17 @@ void compressText(TrieNode* trie, char* originalText, char* compressedText) {
 
 void saveOriginalTextToFile(const char* filename, char* text, TrieNode* root) {
     FILE *file = fopen(filename, "w");
-    char find_word[10000];
     if (file == NULL) {
         printf("파일을 열 수 없습니다.\n");
     }
 
      while (1) {
-        int i = 0;
         fgets(text, sizeof(text) + 100, stdin); //sizeof(text)가 일정 갯수 밖에 못 받아서 일단 임시 방편으로 +100으로 시도해보니 성공했다.
         text[strcspn(text, "\n")] = '\0';  // 개행 문자 제거
 
-        if (text[i] == ':' && text[i+1] == 'q') {
+        if (strcmp(text, "q") == 0) {
             break;
         }
-
-        if (text[i] == ' ' && text[i+1] == ':' && text[i+2] == 'f') {
-            printf("단어가 존재하는지 유무를 알고싶은 단어를 입력하시오: ");
-            scanf("%s", find_word);
-            if(search(root, find_word) == 1) {
-                printf("단어가 존재합니다 \n");
-            }
-            else {
-                printf("단어가 존재하지 않습니다\n");
-            }
-        }
-        i++;
         fprintf(file, "%s\n", text);
         insertWord(root, text);
     }

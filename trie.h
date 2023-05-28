@@ -5,11 +5,9 @@
 #define TRIE_H
 
 typedef struct TrieNode {
-    struct TrieNode* children[26];
-    char* word;
+    struct TrieNode* children[26];  
     int isEndOfWord;  
 } TrieNode;
-
 
 TrieNode* createNode() {
     TrieNode* node = (TrieNode*)malloc(sizeof(TrieNode));
@@ -18,52 +16,57 @@ TrieNode* createNode() {
     for (int i = 0; i < 26; i++) {
         node->children[i] = NULL;
     }
-    node->word = NULL;
+
     return node;
 }
 
-
-TrieNode* return_root(TrieNode* root) {
-    return root;
-}
-
-
 void insertWord(TrieNode* root, char* word) {
-    TrieNode* wordNode = root;
-    while (*word != '\0') {
-        if (*word >= 'A' && *word <= 'Z') {
-            *word += 32;
+    TrieNode* node = root;
+    
+    int length = strlen(word);
+    for (int i = 0; i < length; ) {
+        for (; i < length ; i++) {
+            if (*word >= 'A' && *word <= 'Z') {
+                *word += 32;
+            }   
+            if (word[i] == ' ') {
+                i++;
+                break;
+            }
+            
+            int index = word[i] - 'a';
+            
+            if (!node->children[index]) {
+                node->children[index] = createNode();
+            }
+            
+            node = node->children[index];
         }
-        if ((*word - ' ') == 0) {
-            word++;
-            continue;
-        }
-        if (wordNode->children[*word - 'a'] == NULL) {
-            wordNode->children[*word - 'a'] = createNode();
-        }
-
-        wordNode = wordNode->children[*word - 'a'];
-
-        word++;
+        
+        node->isEndOfWord = 1;
+        node = root;
     }
-    wordNode->isEndOfWord = 1;   
 }
 
-int search(struct TrieNode* root, char* word)
-{
-    if (root == NULL) {
-        return 0;
+
+void showNode(TrieNode* node, char* prefix, int level) {
+    if (node->isEndOfWord) {
+        prefix[level] = '\0';  
+        printf("%s\n", prefix);
     }
- 
-    struct TrieNode* wordNode = root;
-    while (*word != '\0')
-    {
-        wordNode = wordNode->children[*word - 'a'];
-         if (wordNode == NULL) {
-            return 0;
+
+    
+    for (int i = 0; i < 26; i++) {
+        if (node->children[i]) {
+            prefix[level] = 'a' + i;  
+            showNode(node->children[i], prefix, level + 1);  
         }
-         word++;
     }
-    return wordNode->isEndOfWord;
+}   
+
+void showAllWords(TrieNode* root) {
+    char prefix[100000];  
+    showNode(root, prefix, 0);
+
 }
 #endif
