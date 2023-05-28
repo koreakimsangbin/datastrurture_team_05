@@ -32,7 +32,6 @@ int main(int argc, const char * argv[]) {
         free(originalText);
     }
     system("clear");
-
     printTrie(compressedTrie, 0);
 
     return 0;
