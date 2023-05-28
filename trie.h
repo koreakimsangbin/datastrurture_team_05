@@ -5,10 +5,11 @@
 #define TRIE_H
 
 typedef struct TrieNode {
-    struct TrieNode* children[26];  
+    struct TrieNode* children[26];
     char* word;
     int isEndOfWord;  
 } TrieNode;
+
 
 TrieNode* createNode() {
     TrieNode* node = (TrieNode*)malloc(sizeof(TrieNode));
@@ -22,22 +23,47 @@ TrieNode* createNode() {
 }
 
 
-
-void insertWord(TrieNode* root, char* word) {
-    int num =0;
-    int i = 0;
-    char* as = strtok(word, " ");
-    while (as != NULL) {
-        TrieNode* wordNode = createNode();
-
-        wordNode->word = (char*)malloc(strlen(as) + 1);
-        strcpy(wordNode->word, as);
-        root->children[num] = wordNode;
-        num++;
-
-        as = strtok(NULL, " ");
-    }
-    root->isEndOfWord = 1;    
+TrieNode* return_root(TrieNode* root) {
+    return root;
 }
 
+
+void insertWord(TrieNode* root, char* word) {
+    TrieNode* wordNode = root;
+    while (*word != '\0') {
+        if (*word >= 'A' && *word <= 'Z') {
+            *word += 32;
+        }
+        if ((*word - ' ') == 0) {
+            word++;
+            continue;
+        }
+        if (wordNode->children[*word - 'a'] == NULL) {
+            wordNode->children[*word - 'a'] = createNode();
+        }
+
+        wordNode = wordNode->children[*word - 'a'];
+
+        word++;
+    }
+    wordNode->isEndOfWord = 1;   
+}
+
+int search(struct TrieNode* root, char* word)
+{
+    if (root == NULL) {
+        return 0;
+    }
+ 
+    struct TrieNode* wordNode = root;
+    while (*word != '\0')
+    {
+        wordNode = wordNode->children[*word - 'a'];
+         if (wordNode == NULL) {
+            return 0;
+        }
+         word++;
+    }
+    return wordNode->isEndOfWord;
+}
 #endif
