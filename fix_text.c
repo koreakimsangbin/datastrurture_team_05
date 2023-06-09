@@ -1,5 +1,6 @@
 #include "fix_text.h"
 
+
 void compressText(TrieNode* trie, char* originalText, char* compressedText) {
     int compressedIndex = 0;
 
@@ -18,6 +19,7 @@ void compressText(TrieNode* trie, char* originalText, char* compressedText) {
 }
 
 void saveOriginalTextToFile(const char* filename, char* text, TrieNode* root) {
+    char *a = (char*)malloc(sizeof(char) * 100);
     FILE *file = fopen(filename, "w");
     if (file == NULL) {
         printf("파일을 열 수 없습니다.\n");
@@ -30,6 +32,17 @@ void saveOriginalTextToFile(const char* filename, char* text, TrieNode* root) {
         if (strcmp(text, "q") == 0) {
             break;
         }
+
+        if (strcmp(text, "f") == 0) {
+            printf("찾을 단어를 입력하시오: ");
+            scanf("%s", a);
+            search(root, a);
+            sleep(10);
+            free(a);
+
+            break;
+        }
+
         fprintf(file, "%s\n", text);
         insertWord(root, text);
     }
