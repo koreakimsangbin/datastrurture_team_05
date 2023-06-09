@@ -19,7 +19,6 @@ void compressText(TrieNode* trie, char* originalText, char* compressedText) {
 }
 
 void saveOriginalTextToFile(const char* filename, char* text, TrieNode* root) {
-    char *a = (char*)malloc(sizeof(char) * 100);
     FILE *file = fopen(filename, "w");
     if (file == NULL) {
         printf("파일을 열 수 없습니다.\n");
@@ -34,6 +33,7 @@ void saveOriginalTextToFile(const char* filename, char* text, TrieNode* root) {
         }
 
         if (strcmp(text, "f") == 0) {
+            char *a = (char*)malloc(sizeof(char) * 100);
             printf("찾을 단어를 입력하시오: ");
             scanf("%s", a);
             search(root, a);
