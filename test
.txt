@@ -1,2 +1,3 @@
-hi my name is sangbin
-kim nice meet u
+test num is zero
+a ab abc abcd
+apple banana 
